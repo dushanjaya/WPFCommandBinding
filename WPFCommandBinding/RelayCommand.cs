@@ -24,9 +24,10 @@ namespace WPFCommandBinding
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
-
             _execute = execute;
             _canExecute = canExecute;
+            if (canExecute == null)
+                _canExecute = o => true;
         }
 
         #endregion // Constructors
@@ -36,7 +37,7 @@ namespace WPFCommandBinding
         [DebuggerStepThrough]
         public bool CanExecute(object parameters)
         {
-            return _canExecute == null || _canExecute(parameters);
+            return _canExecute(parameters);
         }
 
         public event EventHandler CanExecuteChanged
